@@ -26,7 +26,7 @@ public class Main {
             case 3:
                 DeleteTask();
                 break;
-            case 4:
+            case 0:
                 Exit();
                 break;
             default:
@@ -73,7 +73,7 @@ public class Main {
 
         public static void Exit(){
             Scanner sc = new Scanner(System.in);
-            System.out.println("Çıxış etməyinizə əminsinizmi?");
+            System.out.println("Çıxış etməyinizə əminsinizmi? Beli/Xeyr");
             String choice = sc.nextLine();
             if (choice.equals("Beli")) {
                 System.out.println("****************************");

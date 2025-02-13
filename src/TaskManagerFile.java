@@ -21,7 +21,7 @@ public class TaskManagerFile {
             if (file.createNewFile()) {
                 System.out.println("File Yaradildi: " + file.getName());
             } else {
-                System.out.println("File movcuddur");
+                System.out.println("--------------------");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,7 +34,7 @@ public class TaskManagerFile {
             writer = new FileWriter(fileName, true);
             writer.write(taskNumber+". Task: " + task + "\n");
             writer.write("Date: " + date + "\n");
-            writer.write("Priority: " + priority + "\n\n");
+            writer.write("Priority: " + priority + "\n");
             writer.close();
 
         } catch (IOException e) {
@@ -43,21 +43,22 @@ public class TaskManagerFile {
     }
 
     public int getTaskCount() {
-        int taskNumber = 0;
+        int taskNumber=0;
         try {
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
-                String input = sc.nextLine();
                 taskNumber++;
-                if (input.matches(". Task: ")) {
+                String input = sc.nextLine();
+                if (input.startsWith(". Task: ")) {
+                  break;
                 }
+
             }
-            sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    return taskNumber;
-}
+        return taskNumber;
+    }
 
     public void readFile() {
         try {
@@ -66,7 +67,7 @@ public class TaskManagerFile {
                 String input = sc.nextLine();
                 System.out.println(input);
             }
-            //sc.close();
+            sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
