@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class TaskManagerFile {
-    private String fileName;
+    private static String fileName;
     File file;
     FileWriter writer;
 
     TaskManagerFile(String fileName) {
-        this.fileName = fileName;
+        TaskManagerFile.fileName = fileName;
         createFile();
     }
 
@@ -30,9 +30,9 @@ public class TaskManagerFile {
 
     public void insertFile(String task, String date, String priority) {
         try {
-            int taskNumber = getTaskCount();
+            //int taskNumber = getTaskCount();
             writer = new FileWriter(fileName, true);
-            writer.write(taskNumber+". Task: " + task + "\n");
+            writer.write(getTaskCount() + ". Task: " + task + "\n");
             writer.write("Date: " + date + "\n");
             writer.write("Priority: " + priority + "\n");
             writer.close();
@@ -40,24 +40,6 @@ public class TaskManagerFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public int getTaskCount() {
-        int taskNumber=0;
-        try {
-            Scanner sc = new Scanner(file);
-            while (sc.hasNextLine()) {
-                taskNumber++;
-                String input = sc.nextLine();
-                if (input.startsWith(". Task: ")) {
-                  break;
-                }
-
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return taskNumber;
     }
 
     public void readFile() {
@@ -72,4 +54,63 @@ public class TaskManagerFile {
             e.printStackTrace();
         }
     }
+
+    public int getTaskCount() {
+        int taskNumber = 1;
+        int count = 0;
+        try {
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                String input = sc.nextLine();
+/*
+                if (input.substring(1).startsWith(". Task: ")) { // 1-ci üsul
+                    taskNumber++;
+                }
+*/
+                count++; // 2-ci üsul
+                if(count ==3){
+                    taskNumber++;
+                    count =0;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return taskNumber;
+    }
+
+    public static void deleteTask(int no){
+        int taskNumber = 1;
+        int count = 0;
+
+        String temp = "";
+        try{
+            File file = new File("ToDoList.txt");
+            Scanner sc = new Scanner(file);
+        while(sc.hasNextLine()){
+            String input = sc.nextLine();
+
+            count++;
+            if(count == 3){
+                taskNumber++;
+                count = 0;
+            }
+            if(no != taskNumber){
+                temp += input+"\n";
+            }
+        }
+            try {
+                FileWriter writer = new FileWriter("ToDoList.txt");
+                writer.write(temp);
+                writer.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            sc.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
 }

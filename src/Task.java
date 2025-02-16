@@ -1,4 +1,4 @@
-public class Task extends TaskManagerFile{
+public class Task extends TaskManagerFile {
     public String task;
     public String date;
     public String priority;
@@ -11,7 +11,7 @@ public class Task extends TaskManagerFile{
     }
 
     public void createList() {
-       insertFile(task, date, priority);
+        insertFile(task, date, priority);
         System.out.println("Fayla tapsiriq elave edildi");
     }
 
